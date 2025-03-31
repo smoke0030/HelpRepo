@@ -47,7 +47,7 @@ final class Constants {
 @MainActor
 public class RequestsManager {
 
-    weak var delegate: RequestsManagerDelegate?
+    public weak var delegate: RequestsManagerDelegate?
     @ObservedObject var monitor = NetworkMonitor.shared
     private var networkService: INetworkService {
         return NetworkService()
