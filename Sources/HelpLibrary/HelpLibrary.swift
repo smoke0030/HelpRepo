@@ -178,7 +178,6 @@ public class TokensManager {
             "apns_token": yujikl78 ?? "",
             "att_token": oplkju89 ?? ""
         ]
-        print("Device data: \(dfghj645)")
         return dfghj645
     }
     
@@ -214,10 +213,8 @@ public class TokensManager {
         bvcxz546.dateFormat = "yyyy-MM-dd"
         let ythfd567 = Date()
         guard let rtgdf675 = bvcxz546.date(from: nbvcd546), ythfd567 >= rtgdf675 else {
-            print("Дата разблокировки еще не наступила❌")
             return false
         }
-        print("Приложение активно✅")
         return true
     }
     
@@ -274,14 +271,12 @@ extension TokensManager {
     func ghjkl567() {
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: .failed, object: nil)
-            print("Запущена игра")
         }
     }
     
     func asdfg768(object: URL) {
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: .updated, object: object)
-            print("Запущено вью")
         }
     }
 }
@@ -350,10 +345,8 @@ final class Zxvbn745: Poiuy765 {
         
         let qwsax675 = rftgy768()
         let asdfg575 = qwsax675 + "?data=" + mnbvc674
-        print("🔹 Базовая ссылка: \(asdfg575)")
         
         let yuiop675 = gytrfd67(asdfg575)
-        print("🔹 Кодированная ссылка: \(yuiop675)")
         
         return (yuiop675, asdfg575)
     }
