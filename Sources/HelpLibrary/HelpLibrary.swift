@@ -41,7 +41,7 @@ final class Constants {
 
 
 @MainActor
-public final class RequestsManager {
+public class RequestsManager {
 
     @ObservedObject var monitor = NetworkMonitor.shared
     private var networkService: INetworkService {
@@ -296,11 +296,6 @@ extension RequestsManager {
     }
 }
 
-// Уведомление о получении APNs токена
-extension Notification.Name {
-    static let apnsTokenReceived = Notification.Name("apnsTokenReceived")
-}
-
 
 protocol INetworkService: AnyObject {
     func sendRequest(deviceData: [String: String], _ completion: @escaping (Result<URL,Error>) -> Void )
@@ -458,7 +453,8 @@ final class NetworkService: INetworkService {
     }
 }
 
-extension Notification.Name {
+public extension Notification.Name {
     static let urlUpdated = Notification.Name("urlUpdated")
     static let failUpload = Notification.Name("failUpload")
+    static let apnsTokenReceived = Notification.Name("apnsTokenReceived")
 }
