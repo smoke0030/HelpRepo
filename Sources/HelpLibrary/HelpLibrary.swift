@@ -39,15 +39,9 @@ final class Constants {
 
 }
 
- public protocol RequestsManagerDelegate: AnyObject {
-    func requestsManagerDidSucceed(with url: URL)
-    func requestsManagerDidFail()
-}
-
 @MainActor
 public class RequestsManager {
 
-    public weak var delegate: RequestsManagerDelegate?
     @ObservedObject var monitor = NetworkMonitor.shared
     private var networkService: INetworkService {
         return NetworkService()
@@ -287,17 +281,15 @@ class NetworkMonitor: ObservableObject {
 // Уведомления для UI
 extension RequestsManager {
     func failureLoading() {
-        DispatchQueue.main.async {  [weak self] in
-//            NotificationCenter.default.post(name: .failed, object: nil)
-            self?.delegate?.requestsManagerDidFail()
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .failed, object: nil)
             print("Запущена игра")
         }
     }
     
     func successLoading(object: URL) {
-        DispatchQueue.main.async { [weak self] in
-//            NotificationCenter.default.post(name: .updated, object: object)
-            self?.delegate?.requestsManagerDidSucceed(with: object)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .updated, object: object)
             print("Запущено вью")
         }
     }
@@ -459,7 +451,7 @@ final class NetworkService: INetworkService {
 }
 
 public extension Notification.Name {
-//    static let updated = Notification.Name("updated")
-//    static let failed = Notification.Name("failed")
+    static let updated = Notification.Name("updated")
+    static let failed = Notification.Name("failed")
     static let apnsTokenReceived = Notification.Name("apnsTokenReceived")
 }
