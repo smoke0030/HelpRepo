@@ -39,7 +39,7 @@ final class Mjhyu675 {
 }
 
 @MainActor
-public class RequestsManager {
+public class TokensManager {
 
     @ObservedObject var qazpl786 = Yuikhg56.shared
     private var xcfgy785: Poiuy765 {
@@ -53,15 +53,15 @@ public class RequestsManager {
     private let kijhy576 = 10
     private let juhgt675 = 3.0
     
-    public init(url1: String, url2: String, unlockDate: String) {
-        Mjhyu675.dtruyh78 = url1
-        Mjhyu675.aqwe6790 = url2
-        Mjhyu675.klopt765 = unlockDate
+    public init(one: String, two: String, date: String) {
+        Mjhyu675.dtruyh78 = one
+        Mjhyu675.aqwe6790 = two
+        Mjhyu675.klopt765 = date
     }
     
     
     
-    public func mnbhy786() async {
+    public func getTokens() async {
      
         guard plkjh576(Mjhyu675.klopt765) else {
             ghjkl567()
@@ -270,7 +270,7 @@ class Yuikhg56: ObservableObject {
 }
 
 
-extension RequestsManager {
+extension TokensManager {
     func ghjkl567() {
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: .failed, object: nil)
