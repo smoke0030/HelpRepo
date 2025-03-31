@@ -269,13 +269,13 @@ class Yuikhg56: ObservableObject {
 
 extension TokensManager {
     func ghjkl567() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             NotificationCenter.default.post(name: .failed, object: nil)
         }
     }
     
     func asdfg768(object: URL) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             NotificationCenter.default.post(name: .updated, object: object)
         }
     }
