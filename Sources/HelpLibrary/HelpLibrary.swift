@@ -55,7 +55,7 @@ public final class RequestsManager {
     private let maxRetryCount = 10
     private let retryDelay = 3.0
     
-    init(url1: String, url2: String, unlockDate: String) {
+    public init(url1: String, url2: String, unlockDate: String) {
         Constants.backUrl1 = url1
         Constants.backUrl2 = url2
         Constants.unlockDate = unlockDate
