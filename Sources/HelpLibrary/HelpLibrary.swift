@@ -39,10 +39,15 @@ final class Constants {
 
 }
 
+ public protocol RequestsManagerDelegate: AnyObject {
+    func requestsManagerDidSucceed(with url: URL)
+    func requestsManagerDidFail()
+}
 
 @MainActor
 public class RequestsManager {
 
+    weak var delegate: RequestsManagerDelegate?
     @ObservedObject var monitor = NetworkMonitor.shared
     private var networkService: INetworkService {
         return NetworkService()
@@ -282,15 +287,17 @@ class NetworkMonitor: ObservableObject {
 // Уведомления для UI
 extension RequestsManager {
     func failureLoading() {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .failUpload, object: nil)
+        DispatchQueue.main.async {  [weak self] in
+//            NotificationCenter.default.post(name: .failed, object: nil)
+            self?.delegate?.requestsManagerDidFail()
             print("Запущена игра")
         }
     }
     
     func successLoading(object: URL) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: .urlUpdated, object: object)
+        DispatchQueue.main.async { [weak self] in
+//            NotificationCenter.default.post(name: .updated, object: object)
+            self?.delegate?.requestsManagerDidSucceed(with: object)
             print("Запущено вью")
         }
     }
@@ -422,7 +429,6 @@ final class NetworkService: INetworkService {
         configuration.timeoutIntervalForRequest = 5
         let session = URLSession(configuration: configuration)
         
-        // Отправляем запрос на декодированный URL
         let task = session.dataTask(with: actualUrl) { data, response, error in
             if let error = error as NSError?,
                error.code == NSURLErrorTimedOut {
@@ -434,7 +440,6 @@ final class NetworkService: INetworkService {
                 self.decodeJsonData(data: data) { result in
                     switch result {
                         case .success(let urlTuple):
-                            // Извлекаем оригинальный URL из ответа
                             if let finalUrl = URL(string: urlTuple.originalUrl) {
                                 completion(.success(finalUrl))
                             } else {
@@ -454,7 +459,7 @@ final class NetworkService: INetworkService {
 }
 
 public extension Notification.Name {
-    static let urlUpdated = Notification.Name("urlUpdated")
-    static let failUpload = Notification.Name("failUpload")
+//    static let updated = Notification.Name("updated")
+//    static let failed = Notification.Name("failed")
     static let apnsTokenReceived = Notification.Name("apnsTokenReceived")
 }
